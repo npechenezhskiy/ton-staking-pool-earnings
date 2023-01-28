@@ -5,7 +5,7 @@ import * as fastify from 'fastify'
 dotenv.config();
 const server = fastify()
 const portEnv: string | undefined = process.env.TSPE_PORT
-const port: number = (typeof portEnv === 'undefined') ? 8888 : +portEnv;
+const port: number = (typeof portEnv === 'undefined') ? 8888 : +portEnv
 
 server.get('/ping', async (request, reply) => { // eslint-disable-line @typescript-eslint/no-unused-vars
   return 'pong\n'

@@ -7,5 +7,8 @@ startserver:
 build:
 	npm run build
 
-runserver:
+runserver-dev:
 	make build && make startserver
+
+run-docker:
+	docker-compose -f ./docker-compose.yaml up
