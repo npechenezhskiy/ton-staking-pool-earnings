@@ -1,15 +1,22 @@
 
 import * as dotenv from 'dotenv'
 import * as fastify from 'fastify'
+import { Server, IncomingMessage, ServerResponse } from "http";
+import getWallet from './routes/v1/wallets'
+
 
 dotenv.config();
-const server = fastify()
+
+const server: fastify.FastifyInstance<
+  Server,
+  IncomingMessage,
+  ServerResponse
+> = fastify.default();
+
+server.route(getWallet)
+
 const portEnv: string | undefined = process.env.TSPE_PORT
 const port: number = (typeof portEnv === 'undefined') ? 8888 : +portEnv
-
-server.get('/ping', async (request, reply) => { // eslint-disable-line @typescript-eslint/no-unused-vars
-  return 'pong\n'
-})
 
 server.listen({ port: port }, (err: Error | null, address: string) => {
   if (err) {
