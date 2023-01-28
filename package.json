@@ -1,0 +1,34 @@
+{
+  "name": "ton-staking-pool-earnings",
+  "version": "0.0.1",
+  "description": "Check how much you've earned from the staking pool.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "tslint",
+    "prepare": "husky install",
+    "build": "tsc -p tsconfig.json",
+    "startserver": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npechenezhskiy/ton-staking-pool-earnings.git"
+  },
+  "author": "npechenezhskiy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/npechenezhskiy/ton-staking-pool-earnings/issues"
+  },
+  "homepage": "https://github.com/npechenezhskiy/ton-staking-pool-earnings#readme",
+  "dependencies": {
+    "@types/node": "^18.11.18",
+    "dotenv": "^16.0.3",
+    "fastify": "^4.12.0",
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "^8.32.0",
+    "husky": "^8.0.3"
+  }
+}
