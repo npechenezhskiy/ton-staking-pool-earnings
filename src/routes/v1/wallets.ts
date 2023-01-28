@@ -7,7 +7,7 @@ const walletSchema: fastify.FastifySchema = {
     params: {
         type: 'object',
         properties: {
-            wallet: {
+            walletAddr: {
                 type: 'string'
             }
         }
@@ -28,22 +28,22 @@ const walletSchema: fastify.FastifySchema = {
 }
 
 interface IGetWalletParams {
-    wallet: number
+    walletAddr: number
 }
 
 type GetWalletRequest = fastify.FastifyRequest<{ Params: IGetWalletParams }>
 
 const getWalletHandler: fastify.RouteHandlerMethod = async (request: GetWalletRequest, reply: fastify.FastifyReply) => {
-    const wallet: number = request.params.wallet  // eslint-disable-line @typescript-eslint/no-unused-vars
+    const walletAddr: string = request.params.walletAddr  // eslint-disable-line @typescript-eslint/no-unused-vars
     reply.send({
-        balance: 'foo',
-        totalEarnings: 'bar'
+        balance: 123,
+        totalEarnings: 123
     })
 }
 
 const getWallet: fastify.RouteOptions<Server, IncomingMessage, ServerResponse> = {
     method: 'GET',
-    url: '/:wallet',
+    url: '/:walletAddr',
     handler: getWalletHandler,
     schema: walletSchema,
 }
