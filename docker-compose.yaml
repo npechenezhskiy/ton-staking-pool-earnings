@@ -13,6 +13,7 @@ services:
       - 8888:${TSPE_PORT}
     depends_on:
       - db
+      - ton-api-v4
   db:
     image: postgres:alpine
     environment:
@@ -24,5 +25,12 @@ services:
       - db-data:/var/lib/postgresql/data
     expose:
       - 5432
+  ton-api-v4:
+    image: tonwhales/ton-api-v4:v38
+    restart: always
+    environment:
+      - TON_CONFIG=${TON_CONFIG}
+    expose:
+      - 3000
 volumes:
   db-data:
