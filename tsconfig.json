@@ -2,7 +2,7 @@
     "compileOnSave": true,
     "compilerOptions": {
         "esModuleInterop": true,
-        "target": "es6",
+        "target": "es2018",
         "module": "commonjs",
         "noImplicitAny": true,
         "removeComments": true,

@@ -1,0 +1,15 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Wallet {
+  id            Int    @id @default(autoincrement())
+  address       String
+  balance       Float
+  totalEarnings Float
+}

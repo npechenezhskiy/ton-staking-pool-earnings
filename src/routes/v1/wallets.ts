@@ -1,7 +1,9 @@
 import * as fastify from 'fastify'
 import { Server, IncomingMessage, ServerResponse } from 'http';
-import { Address } from 'ton' // eslint-disable-line @typescript-eslint/no-unused-vars
+import { Address, TonClient4 } from 'ton' // eslint-disable-line @typescript-eslint/no-unused-vars
+import { PrismaClient } from '@prisma/client'
 
+const prisma: PrismaClient = new PrismaClient();
 
 const walletSchema: fastify.FastifySchema = {
     params: {
@@ -28,7 +30,7 @@ const walletSchema: fastify.FastifySchema = {
 }
 
 interface IGetWalletParams {
-    walletAddr: number
+    walletAddr: string
 }
 
 type GetWalletRequest = fastify.FastifyRequest<{ Params: IGetWalletParams }>
