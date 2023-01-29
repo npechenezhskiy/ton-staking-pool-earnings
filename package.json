@@ -1,7 +1,7 @@
 {
   "name": "ton-staking-pool-earnings",
   "version": "0.0.1",
-  "description": "Check how much you've earned from the staking pool.",
+  "description": "Check how much you have earned from the staking pool.",
   "main": "index.js",
   "scripts": {
     "lint": "tslint",
@@ -20,10 +20,13 @@
   },
   "homepage": "https://github.com/npechenezhskiy/ton-staking-pool-earnings#readme",
   "dependencies": {
+    "@prisma/client": "^4.9.0",
     "@types/node": "^18.11.18",
     "dotenv": "^16.0.3",
     "fastify": "^4.12.0",
+    "prisma": "^4.9.0",
     "ton": "^13.3.0",
+    "ts-node": "^10.9.1",
     "typescript": "^4.9.4"
   },
   "devDependencies": {
