@@ -10,10 +10,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - DATABASE_HOST=db
     volumes:
-      - ./backend/src:/code/src:ro
-      - ./backend/package.json:/code/package.json
-      - ./backend/package-lock.json:/code/package-lock.json
-      - back-notused:/opt/app/node_modules
+      - .:/usr/src/app
     ports:
       - 8888:${TSPE_PORT}
     depends_on:

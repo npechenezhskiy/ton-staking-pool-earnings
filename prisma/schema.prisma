@@ -9,7 +9,7 @@ generator client {
 
 model Wallet {
   id            Int    @id @default(autoincrement())
-  address       String
+  address       String @unique
   balance       Float
   totalEarnings Float
 }
