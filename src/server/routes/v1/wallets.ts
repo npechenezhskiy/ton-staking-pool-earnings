@@ -1,6 +1,5 @@
 import * as fastify from 'fastify'
 import { Server, IncomingMessage, ServerResponse } from 'http';
-import { Address, TonClient4 } from 'ton' // eslint-disable-line @typescript-eslint/no-unused-vars
 import { PrismaClient } from '@prisma/client'
 
 const prisma: PrismaClient = new PrismaClient();
@@ -39,7 +38,7 @@ interface IGetWalletParams {
 type GetWalletRequest = fastify.FastifyRequest<{ Params: IGetWalletParams }>
 
 const getWalletHandler: fastify.RouteHandlerMethod = async (request: GetWalletRequest, reply: fastify.FastifyReply) => {
-    const walletAddr: string = request.params.walletAddr  // eslint-disable-line @typescript-eslint/no-unused-vars
+    const walletAddr: string = request.params.walletAddr
 
     const wallet = await prisma.wallet.findUnique({
         where: { address: walletAddr}
