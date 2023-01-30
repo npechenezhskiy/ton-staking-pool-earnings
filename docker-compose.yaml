@@ -11,6 +11,8 @@ services:
       - DATABASE_HOST=db
     ports:
       - 8888:${TSPE_PORT}
+    expose:
+      - 8888
     depends_on:
       - db
       - ton-api-v4
@@ -30,7 +32,20 @@ services:
     restart: always
     environment:
       - TON_CONFIG=${TON_CONFIG}
-    expose:
-      - 3000
+    ports:
+      - 3000:3000
+  worker:
+    build:
+      context: .
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - DATABASE_HOST=db
+      - TSPE_API_BASE_URL=${TSPE_API_BASE_URL}
+    command: node dist/worker/index.js
+    depends_on:
+      - ton-api-v4
 volumes:
   db-data:
