@@ -44,8 +44,22 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - DATABASE_HOST=db
       - TSPE_API_BASE_URL=${TSPE_API_BASE_URL}
+      - TSPE_STAKE_POOL_WALLET_ADDRESS=${TSPE_STAKE_POOL_WALLET_ADDRESS}
+      - REDIS_HOST_PASSWORD=${REDIS_HOST_PASSWORD}
     command: node dist/worker/index.js
     depends_on:
       - ton-api-v4
+      - redis
+  redis:
+    image: redis:alpine
+    restart: always
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_HOST_PASSWORD"
+    env_file:
+      - .env
+    volumes:
+    - redis-data:/data
+    expose:
+      - 6379
 volumes:
   db-data:
+  redis-data:

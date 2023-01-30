@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv'
 import * as fastify from 'fastify'
 import { Server, IncomingMessage, ServerResponse } from "http";
-import getWallet from '../routes/v1/wallets'
+import getWallet from './routes/v1/wallets'
 
 
 dotenv.config();
