@@ -104,7 +104,7 @@ const performSync = async function (apiClient: APIClient, cacheClient: CacheClie
   }
 }
 
-const syncBlock = async function (apiClient: APIClient, cacheClient: CacheClient, blockSeqNo: number) {  // eslint-disable-line @typescript-eslint/no-unused-vars
+const syncBlock = async function (apiClient: APIClient, cacheClient: CacheClient, blockSeqNo: number) {
   console.log("Syncing block " + blockSeqNo)
   const syncedWalletLastHash: string = await cacheClient.getSyncedWalletLastHash() || "unknown"
   const lastSyncedTransactionSeqNo: number = await cacheClient.getLastSyncedTransactionSeqNo() || -1

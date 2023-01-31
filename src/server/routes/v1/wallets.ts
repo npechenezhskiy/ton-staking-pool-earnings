@@ -1,6 +1,6 @@
 import * as fastify from 'fastify'
 import { Server, IncomingMessage, ServerResponse } from 'http';
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Deposit } from '@prisma/client'
 
 const prisma: PrismaClient = new PrismaClient();
 
@@ -71,6 +71,13 @@ const getWallet: fastify.RouteOptions<Server, IncomingMessage, ServerResponse> =
     url: '/:walletAddr',
     handler: getWalletHandler,
     schema: walletSchema,
+}
+
+const getDepositEarnings = async function (deposit: Deposit, perDayProfitPercentage: number) {   // eslint-disable-line @typescript-eslint/no-unused-vars
+    const now: number = Date.now()
+    const daysPassed: number = (deposit.dateCreated.getTime() - now) % 86400000
+    // Co compound interest therefore just multiply
+    return deposit.amount * bigint(perDayProfitPercentage) * bigint(daysPassed)
 }
 
 export default getWallet
