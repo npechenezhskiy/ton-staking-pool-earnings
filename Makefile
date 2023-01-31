@@ -14,4 +14,4 @@ run-docker:
 	docker-compose -f ./docker-compose.yaml up --build
 
 run-docker-dev:
-	docker-compose -f ./docker-compose.dev.yaml up --build backend worker
+	docker-compose -f ./docker-compose.dev.yaml up --build

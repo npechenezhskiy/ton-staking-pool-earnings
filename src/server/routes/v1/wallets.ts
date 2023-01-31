@@ -40,18 +40,30 @@ type GetWalletRequest = fastify.FastifyRequest<{ Params: IGetWalletParams }>
 const getWalletHandler: fastify.RouteHandlerMethod = async (request: GetWalletRequest, reply: fastify.FastifyReply) => {
     const walletAddr: string = request.params.walletAddr
 
-    const wallet = await prisma.wallet.findUnique({
-        where: { address: walletAddr}
+    await prisma.wallet.findUnique({
+        where: { address: walletAddr},
+        include: {
+            deposits: true
+        }
     })
 
-    if (wallet === null) {
-        reply.code(404).send('Wallet not found!')
-    } else {
-        reply.send({
-            balance: wallet.balance,
-            totalEarnings: wallet.totalEarnings
-        })
-    }
+    // if (wallet === null) {
+    //     reply.code(404).send('Wallet not found!')
+    //     return
+    // }
+
+    const balance = bigint(0)
+    const totalEarnings = bigint(0)
+
+    // for (const deposit of wallet.deposits) {
+    //     balance = balance + deposit.amount
+    //     totalEarnings
+    // }
+
+    reply.send({
+        balance: balance,
+        totalEarnings: totalEarnings
+    })
 }
 
 const getWallet: fastify.RouteOptions<Server, IncomingMessage, ServerResponse> = {
