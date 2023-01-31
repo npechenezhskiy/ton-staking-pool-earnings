@@ -75,7 +75,7 @@ const getWallet: fastify.RouteOptions<Server, IncomingMessage, ServerResponse> =
 
 const getDepositEarnings = async function (deposit: Deposit, perDayProfitPercentage: number) {   // eslint-disable-line @typescript-eslint/no-unused-vars
     const now: number = Date.now()
-    const daysPassed: number = (deposit.dateCreated.getTime() - now) % 86400000
+    const daysPassed: number = (now - deposit.dateCreated.getTime()) % 86400000
     // Co compound interest therefore just multiply
     return deposit.amount * bigint(perDayProfitPercentage) * bigint(daysPassed)
 }

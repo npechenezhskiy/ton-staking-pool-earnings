@@ -32,7 +32,7 @@ Response:
 }
 ```
 
-The backend pod fetches all of the deposits associated with the wallet from the request path and performs a simple profit computation that depends on for how long this specific deposit exists.
+The backend pod fetches all of the deposits associated with the wallet from the request path and performs a simple profit computation that depends on for how long each specific deposit exists.
 
 ## Worker
 
