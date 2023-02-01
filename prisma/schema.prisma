@@ -7,9 +7,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Deposit {
+  id Int @id @default(autoincrement())
+
+  Wallet      Wallet?  @relation(fields: [walletId], references: [id])
+  walletId    Int?
+  amount      BigInt
+  dateCreated DateTime
+}
+
 model Wallet {
-  id            Int    @id @default(autoincrement())
-  address       String @unique
-  balance       Float
-  totalEarnings Float
+  id       Int       @id @default(autoincrement())
+  address  String    @unique
+  deposits Deposit[]
 }

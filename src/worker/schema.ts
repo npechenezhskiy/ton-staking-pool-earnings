@@ -30,7 +30,7 @@ interface ChangedItem {
 export interface BlockFullWS {
     seqno: number,
     changed: {
-        [key: string] : ChangedItem
+        [key: string]: ChangedItem
     }
 }
 
@@ -40,7 +40,7 @@ interface Transaction {
     lt: string
 }
 
-interface Shard extends BlockBase{
+interface Shard extends BlockBase {
     transactions: Array<Transaction>
 }
 
@@ -49,4 +49,64 @@ export interface BlockFullAPI {
     block: {
         shards: Array<Shard>
     }
+}
+
+
+interface BlockTransaction {
+    workchain: number,
+    shard: string,
+    seqno: number
+}
+
+
+export interface TransactionsResponse {
+    boc: string,
+    blocks: BlockTransaction[]
+}
+
+interface Balance {
+    coins: string,
+    currencies: object
+}
+
+interface Last {
+    hash: string,
+    lt: string
+}
+
+interface State {
+    codeHash: string,
+    dataHash: string,
+    type: string
+}
+
+interface Used {
+    bits: number,
+    cells: number,
+    publicCells: number
+}
+
+interface StorageStat {
+    duePayment: number | null,
+    lastPaid: number,
+    used: Used
+}
+
+interface Account {
+    balance: Balance,
+    last: Last,
+    state: State,
+    storageStat: StorageStat
+}
+
+export interface BlockLite {
+    account: Account
+}
+
+interface Group {
+    group1: string
+}
+
+export interface DepositTransactionRegExpExec {
+    groups: Group
 }

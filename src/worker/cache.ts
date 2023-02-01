@@ -8,6 +8,8 @@ if (typeof redisHostPwd === 'undefined') {
 const LAST_SYNCED_BLOCK = 'LAST_SYNCED_BLOCK'
 const WALLET_FIRST_BLOCK = 'WALLET_FIRST_BLOCK'
 const LAST_BLOCK = 'LAST_BLOCK'
+const LAST_SYNCED_HASH = 'LAST_SYNCED_HASH'
+const LAST_SYNCED_TRANSACTION_SEQNO = 'LAST_SYNCED_TRANSACTION_SEQNO'
 
 
 export class CacheClient {
@@ -51,6 +53,23 @@ export class CacheClient {
 
     async setCurrentBlock(value: number) {
         await this.redis.set(LAST_BLOCK, value.toString())
+    }
+
+    async getSyncedWalletLastHash() {
+        return await this.redis.get(LAST_SYNCED_HASH)
+    }
+
+    async setSyncedWalletLastHash(value: string) {
+        await this.redis.set(LAST_SYNCED_HASH, value)
+    }
+
+    async getLastSyncedTransactionSeqNo() {
+        const seqno: string | null = await this.redis.get(LAST_SYNCED_TRANSACTION_SEQNO)
+        return (seqno === null) ? null : parseInt(seqno)
+    }
+
+    async setLastSyncedTransactionSeqNo(value: number) {
+        await this.redis.set(LAST_SYNCED_TRANSACTION_SEQNO, value.toString())
     }
 
 }
