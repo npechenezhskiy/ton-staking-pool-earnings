@@ -31,7 +31,7 @@ export interface IGetWalletParams {
     walletAddr: string
 }
 
-export interface ElectionEntity {
+interface ElectionEntity {
     address: string,
     stake: string,
     weight: string

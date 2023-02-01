@@ -2,7 +2,7 @@ import * as fastify from 'fastify'
 import { Server, IncomingMessage, ServerResponse } from 'http';
 import { PrismaClient, Deposit } from '@prisma/client'
 import { APIClient } from '../../api';
-import { GetWalletRequest, walletSchema, ILatestElections, Election, ElectionEntity } from '../../schema'
+import { GetWalletRequest, walletSchema, ILatestElections, Election } from '../../schema'
 
 const baseSstakePoolWalletAddr: string | undefined = process.env.TSPE_BASE_STAKE_POOL_WALLET_ADDRESS
 if (typeof baseSstakePoolWalletAddr === 'undefined') {
@@ -30,7 +30,7 @@ const getWalletHandler: fastify.RouteHandlerMethod = async (request: GetWalletRe
     let balance = Number(0)
     let totalEarnings = Number(0)
 
-    let perDayProfitPercentage: Number = await  getPerDayProfitPercentage(apiClient);
+    const perDayProfitPercentage: number = await  getPerDayProfitPercentage(apiClient);
 
     for (const deposit of wallet.deposits) {
         balance = balance + Number(deposit.amount.toString())
@@ -50,7 +50,7 @@ const getWallet: fastify.RouteOptions<Server, IncomingMessage, ServerResponse> =
     schema: walletSchema,
 }
 
-const getDepositEarnings = async function (deposit: Deposit, perDayProfitPercentage: Number) {   // eslint-disable-line @typescript-eslint/no-unused-vars
+const getDepositEarnings = async function (deposit: Deposit, perDayProfitPercentage: number) {   // eslint-disable-line @typescript-eslint/no-unused-vars
     const now: number = Date.now()
     const daysPassed: number = (now - deposit.dateCreated.getTime()) % 86400000
     // Co compound interest therefore just multiply
@@ -77,7 +77,7 @@ const getPerDayProfitPercentage = async function (apiClient: APIClient) {
 
     const whalesProfitPercentage = Number(totalWhalesWeight / totalWeight)
     const whalesProfitAmount = Number(totalBonuses * whalesProfitPercentage)
-    const APY = Number(whalesProfitAmount / totalBonuses)
+    const APY = Number(whalesProfitAmount / totalWhalesStake)
     return APY
 }
 

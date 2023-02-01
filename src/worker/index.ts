@@ -141,7 +141,7 @@ const syncBlock = async function (apiClient: APIClient, cacheClient: CacheClient
       
       // DB processing here
     } else if (await isDepositTransaction(t)) {
-      const amount = Number(t.inMessage!.info.value.coins)
+      const amount = Number(t.inMessage!.info.value.coins) // eslint-disable-line  @typescript-eslint/no-non-null-assertion
       console.log("Process deposit transaction with amount: " + amount)
       const senderAddr: string = t.outMessages[0]!.info!.src!.toString() // eslint-disable-line  @typescript-eslint/no-non-null-assertion
       const wallet = await getOrCreareWallet(senderAddr)
@@ -181,7 +181,7 @@ const getOrCreareWallet = async function (walletAddr: string) {
   return wallet
 }
 
-const createDeposit = async function (walletId: number, amount: Number, dateCreated: number) {
+const createDeposit = async function (walletId: number, amount: number, dateCreated: number) {
   const deposit = prisma.deposit.create({
     data: {
       amount: BigInt(amount.toString()),
