@@ -140,14 +140,12 @@ const syncBlock = async function (apiClient: APIClient, cacheClient: CacheClient
       await deleteDeposits(wallet.id)
       
       // DB processing here
-    } else {
-      const amount: bigint = await isDepositTransaction(t)
-      if (amount) {
-        console.log("Process deposit transaction with amount: " + amount)
-        const senderAddr: string = t.outMessages[0]!.info!.src!.toString() // eslint-disable-line  @typescript-eslint/no-non-null-assertion
-        const wallet = await getOrCreareWallet(senderAddr)
-        await createDeposit(wallet.id, amount, t.time)
-      }
+    } else if (await isDepositTransaction(t)) {
+      const amount = Number(t.inMessage!.info.value.coins)
+      console.log("Process deposit transaction with amount: " + amount)
+      const senderAddr: string = t.outMessages[0]!.info!.src!.toString() // eslint-disable-line  @typescript-eslint/no-non-null-assertion
+      const wallet = await getOrCreareWallet(senderAddr)
+      await createDeposit(wallet.id, amount, t.time)
     }
   }
 
@@ -166,10 +164,7 @@ const getTransactionOutMessage = async function (transaction: RawTransaction) {
 
 const isDepositTransaction = async function (transaction: RawTransaction) {
   const result: RegExpExecArray | null = stakeAccceptedRe.exec(await getTransactionOutMessage(transaction)) || null
-  if (result === null) {
-    return bigint(0)
-  }
-  return bigint(result.groups!.amount)  // eslint-disable-line @typescript-eslint/no-non-null-assertion
+  return result === null
 }
 
 const isWithdrawTransaction = async function (transaction: RawTransaction) {
@@ -186,10 +181,10 @@ const getOrCreareWallet = async function (walletAddr: string) {
   return wallet
 }
 
-const createDeposit = async function (walletId: number, amount: bigint, dateCreated: number) {
+const createDeposit = async function (walletId: number, amount: Number, dateCreated: number) {
   const deposit = prisma.deposit.create({
     data: {
-      amount: amount,
+      amount: BigInt(amount.toString()),
       walletId: walletId,
       dateCreated: new Date(dateCreated * 1000)
     }
